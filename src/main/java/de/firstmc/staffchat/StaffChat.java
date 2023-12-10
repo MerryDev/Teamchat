@@ -10,7 +10,7 @@ import de.firstmc.staffchat.commands.TeamChatCommand;
 import java.util.logging.Logger;
 
 @Plugin(id = "teamchat", name = "teamchat", version = "0.1.0-SNAPSHOT",
-		url = "https://firstmc.de", description = "Velocity TeamChat", authors = {"MerryChristmas,ExceptionThread"})
+		url = "https://firstmc.de", description = "Velocity TeamChat", authors = {"MerryChristmas", "ExceptionThread"})
 public class StaffChat {
 
 	private final ProxyServer proxyServer;
