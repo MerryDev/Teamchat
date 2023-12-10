@@ -26,7 +26,4 @@ public class StaffChat {
 	public void handle(ProxyInitializeEvent event) {
 		this.proxyServer.getCommandManager().register("tc", new TeamChatCommand(proxyServer));
 	}
-
-	// sd
-
 }
