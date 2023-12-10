@@ -17,6 +17,8 @@ public final class TeamChatCommand implements SimpleCommand {
 
 	private final ProxyServer server;
 
+	private static final String PERMISSION = "Teamchat.FirstMC";
+
 	@Override
 	public void execute(final Invocation invocation) {
 		CommandSource source = invocation.source();
@@ -27,7 +29,7 @@ public final class TeamChatCommand implements SimpleCommand {
 			return;
 		}
 
-		if (!player.hasPermission("Teamchat.FirstMC")) {
+		if (!player.hasPermission(PERMISSION)) {
 			player.sendMessage(Component.text("You don't have permission to use this command.", NamedTextColor.RED));
 			return;
 		}
@@ -37,13 +39,11 @@ public final class TeamChatCommand implements SimpleCommand {
 			return;
 		}
 
-		String message = String.join(" ", args);
-    	server.getAllPlayers().forEach(p -> {
-    		if (p.hasPermission("Teamchat.FirstMC")) {
-    			p.sendMessage(Component.text("[TeamChat] " + player.getUsername() + ": " + message, NamedTextColor.GRAY));
-    		}
-    	});
-
+		final String message = String.join(" ", args);
+		for (Player team : this.server.getAllPlayers()) {
+			if (!team.hasPermission(PERMISSION)) continue;
+			team.sendMessage(Component.text("[TeamChat] " + player.getUsername() + ": " + message, NamedTextColor.GRAY));
+		}
 	}
 
 	@Override
