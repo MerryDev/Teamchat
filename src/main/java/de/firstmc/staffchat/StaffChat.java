@@ -41,6 +41,7 @@ public class StaffChat {
 				.plugin(this)
 				.build();
 
+		commandManager.register(teamChatCommandMeta, new TeamChatCommand(this.proxyServer));
 		commandManager.register(staffChatCommandMeta, new StaffChatCommand(this.proxyServer));
 
 		logger.info("Plugin was initialized");
