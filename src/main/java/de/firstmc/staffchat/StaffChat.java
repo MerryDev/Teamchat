@@ -2,6 +2,8 @@ package de.firstmc.staffchat;
 
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
+import com.velocitypowered.api.command.CommandManager;
+import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -14,16 +16,27 @@ import java.util.logging.Logger;
 public class StaffChat {
 
 	private final ProxyServer proxyServer;
+	private final Logger logger;
 
 	@Inject
 	public StaffChat(ProxyServer proxyServer, Logger logger) {
 		this.proxyServer = proxyServer;
+		this.logger = logger;
 
 		logger.info("Plugin started successfully.");
 	}
 
 	@Subscribe
-	public void handle(ProxyInitializeEvent event) {
-		this.proxyServer.getCommandManager().register("tc", new TeamChatCommand(proxyServer));
+	public void onProxyInitialize(ProxyInitializeEvent event) {
+		final CommandManager commandManager = this.proxyServer.getCommandManager();
+
+		CommandMeta teamChatCommandMeta = commandManager.metaBuilder("teamchat")
+				.aliases("tc")
+				.plugin(this)
+				.build();
+
+		commandManager.register(teamChatCommandMeta, new TeamChatCommand(this.proxyServer));
+
+		logger.info("Plugin was initialized");
 	}
 }

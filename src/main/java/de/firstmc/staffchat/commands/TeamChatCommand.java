@@ -10,6 +10,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
 @AllArgsConstructor
 public final class TeamChatCommand implements RawCommand {
 
@@ -33,6 +37,11 @@ public final class TeamChatCommand implements RawCommand {
 	@Override
 	public boolean hasPermission(final Invocation invocation) {
 		return invocation.source().hasPermission("Teamchat.FirstMC");
+	}
+
+	@Override
+	public CompletableFuture<List<String>> suggestAsync(Invocation invocation) {
+		return CompletableFuture.supplyAsync(Collections::emptyList);
 	}
 }
 
